@@ -3,8 +3,8 @@ import { Button } from '@/components';
 import { Metadata } from 'next';
 import {getServerSession} from "next-auth/next";
 import {authOptions} from "@/lib/auth";
-import { redirect } from 'next/navigation';
 import { UserAuthBox } from '@/components/user-auth-box';
+import { LogoutButton } from '@/components/logout-button';
 
 export const metadata: Metadata = {
   title: "Gemini Sheets - Gemini AI Powered Sheets Functions",
@@ -13,8 +13,6 @@ export const metadata: Metadata = {
 
 export default async function Home() {
   const session = await getServerSession(authOptions);
-
-  console.log(session)
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen py-2">
@@ -33,7 +31,10 @@ export default async function Home() {
         </p>
 
         { session?.user?.name ? (<>
-            Hello ${session?.user?.name}
+            <p>Hello, {session?.user?.name}</p>
+            <div className="mt-6">
+              <LogoutButton />
+            </div>
           </>
           ):(
             <div className="mt-6">
