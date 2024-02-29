@@ -5,6 +5,7 @@ import {getServerSession} from "next-auth/next";
 import {authOptions} from "@/lib/auth";
 import { UserAuthBox } from '@/components/user-auth-box';
 import { LogoutButton } from '@/components/logout-button';
+import Link from 'next/link';
 
 export const metadata: Metadata = {
   title: "Gemini Sheets - Gemini AI Powered Sheets Functions",
@@ -33,6 +34,11 @@ export default async function Home() {
         { session?.user?.name ? (<>
             <p>Hello, {session?.user?.name}</p>
             <div className="mt-6">
+              <Link href="/dashboard">
+                <Button className='mr-2' color="blue" variant="outlined" size="md" ripple={true} placeholder={"Dashboard"}>
+                    Dashboard
+                </Button>
+              </Link>
               <LogoutButton />
             </div>
           </>

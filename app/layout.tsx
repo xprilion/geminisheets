@@ -16,7 +16,11 @@ export default function RootLayout({
     <NextAuthProvider>
       <ThemeProvider>
         <html lang="en">
-          <body className={inter.className}>{children}</body>
+          <body className={inter.className}>
+            <div className="mx-auto max-w-screen-xl px-6 py-3">
+              {children}
+            </div>
+          </body>
         </html>
       </ThemeProvider>
     </NextAuthProvider>

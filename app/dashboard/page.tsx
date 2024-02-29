@@ -1,6 +1,16 @@
 import { Metadata } from 'next';
 import {getServerSession} from "next-auth/next";
 import {authOptions} from "@/lib/auth";
+import prisma from "@/lib/prisma";
+import { redirect } from 'next/navigation';
+import { PrivateMenu } from '@/components/private-navbar';
+
+type Function = {
+    id: number;
+    name: string;
+    description: string;
+    createdAt: Date;
+};
 
 export const metadata: Metadata = {
     title: "Dashboard | Gemini Sheets",
@@ -9,30 +19,46 @@ export const metadata: Metadata = {
   
   export default async function Home() {
     const session = await getServerSession(authOptions);
+    const user = session?.user;
+
+    if (!user) {
+        redirect("/login")
+    }
+
+    const totalFunctions = await prisma.function.count({
+      where: {
+        userId: session.userId as string, // Ensure this matches how you're storing the user ID in your session
+      },
+    });
+  
+    const recentFunctions = await prisma.function.findMany({
+      where: {
+        userId: session.userId, // Ensure this matches how you're storing the user ID in your session
+      },
+      orderBy: {
+        createdAt: 'desc',
+      },
+      take: 3,
+    });
+
   
     return (
-      <div className="flex flex-col items-center justify-center min-h-screen py-2">
-  
-        <main className="flex flex-col items-center justify-center w-full flex-1 px-20 text-center">
-          <h1 className="text-6xl font-bold">
-            Welcome to <a className="text-blue-600" href="#">GeminiSheets!</a>
-          </h1>
-  
-          <p className="mt-3 text-2xl">
-            Supercharge your Google Sheets with Gemini AI.
-          </p>
-        </main>
-  
-        <footer className="flex items-center justify-center w-full h-24 border-t">
-          <a
-            className="flex items-center justify-center"
-            href="#"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            GeminiSheets <img src="/logo.png" alt="GeminiSheets Logo" className="h-4 mx-2" /> With &lt;3 from @xprilion.
-          </a>
-        </footer>
+      <div className="container mx-auto p-4">
+        <PrivateMenu />
+        <h1 className="text-2xl font-bold mb-4 mt-8">Dashboard</h1>
+        <div>
+          <h2 className="text-xl">Total Functions: {totalFunctions}</h2>
+          <div>
+            <h3 className="text-lg">Recent Functions:</h3>
+            <ul>
+              {recentFunctions.map((func) => (
+                <li key={func.id}>
+                  {func.name} - {new Date(func.createdAt).toLocaleDateString()}
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
       </div>
     );
   }

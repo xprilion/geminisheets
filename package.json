@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@auth/prisma-adapter": "^1.4.0",
+    "@heroicons/react": "^2.1.1",
     "@material-tailwind/react": "^2.1.9",
     "@prisma/client": "^5.10.2",
     "@types/next-auth": "^3.15.0",
