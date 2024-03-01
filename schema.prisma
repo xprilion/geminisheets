@@ -45,6 +45,7 @@ model User {
   accounts      Account[]
   sessions      Session[]
   functions     Function[]
+  sheets        Sheet[]
 }
 
 model VerificationToken {
@@ -63,18 +64,42 @@ model Function {
   enabled     Boolean   @default(true)
   userId      String
   user        User      @relation(fields: [userId], references: [id])
-  sheets      SheetFunction[]
+  sheetFunctions      SheetFunction[]
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
 }
 
 model SheetFunction {
-  id          String    @id @default(cuid())
-  sheetId     String
+  id          String       @id @default(cuid())
+  sheetId     String       
   functionId  String
-  function    Function  @relation(fields: [functionId], references: [id])
+  appsScriptProjectId String
+  function    Function     @relation(fields: [functionId], references: [id])
+  sheet       Sheet  @relation(fields: [sheetId], references: [id])
+  userId      String
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+
+  @@unique([userId, sheetId, functionId])
+}
+
+
+model Sheet {
+  id          String          @id @default(cuid())
+  googleSheetId     String
+  name        String
+  userId      String
+  user        User            @relation(fields: [userId], references: [id])
+  sheetFunctions SheetFunction[]
+  createdAt   DateTime        @default(now())
+  updatedAt   DateTime        @updatedAt
+  @@index([googleSheetId, userId], name: "userSheetIndex")
+}
+
+
+model GlobalSheetState {
+  googleSheetId     String    @id
+  initialized Boolean   @default(false)
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
-
-  @@unique([sheetId, functionId])
 }

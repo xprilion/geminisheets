@@ -17,9 +17,10 @@ export const authOptions: NextAuthOptions = {
             clientSecret: process.env.GOOGLE_SECRET || "",
             authorization: {
                 params: {
-                  prompt: "consent",
-                  access_type: "offline",
-                  response_type: "code"
+                    scope: "openid email profile https://www.googleapis.com/auth/script.projects https://www.googleapis.com/auth/script.projects.readonly",
+                    prompt: "consent",
+                    access_type: "offline",
+                    response_type: "code"
                 }
             }
         }),

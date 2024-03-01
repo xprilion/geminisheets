@@ -3,7 +3,7 @@
 import { HttpMethod } from '@/types/http';
 import React, { useState } from 'react';
 import { Button } from "@/components";
-import { redirect } from 'next/navigation';
+import { useRouter } from 'next/router';
 
 interface InputField {
   name: string;
@@ -22,6 +22,8 @@ export const FunctionAddForm: React.FC = () => {
   const [inputs, setInputs] = useState<InputField[]>([{ name: '', type: inputTypes[0].value }]);
   const [logic, setLogic] = useState('');
 
+  const router = useRouter();
+
   const handleAddInput = () => {
     setInputs([...inputs, { name: '', type: inputTypes[0].value }]);
   };
@@ -39,7 +41,6 @@ export const FunctionAddForm: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log({ functionName, description, inputs, logic });
     const response = await fetch(`/api/functions/add`, {
         method: HttpMethod.POST,
         body: JSON.stringify({
@@ -50,8 +51,12 @@ export const FunctionAddForm: React.FC = () => {
         }),
     });
 
-    const data = await response.json();
-    redirect(`/functions/${data.id}`)
+    if (response.ok) {
+      const data = await response.json();
+      router.push(`/sheets/${data.id}`);
+    } else {
+      console.error('Failed to add the function');
+    }
   };
 
   return (

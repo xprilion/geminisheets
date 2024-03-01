@@ -40,6 +40,16 @@ import Link from "next/link";
           color="blue-gray"
           className="p-1 font-medium"
         >
+          <Link href="/sheets" className="flex items-center hover:text-blue-500 transition-colors">
+            Sheets
+          </Link>
+        </Typography>
+        <Typography placeholder={"placeholder"}
+          as="li"
+          variant="small"
+          color="blue-gray"
+          className="p-1 font-medium"
+        >
           <Link href="/settings" className="flex items-center hover:text-blue-500 transition-colors">
             Account
           </Link>

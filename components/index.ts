@@ -15,6 +15,8 @@ import {
     MenuItem,
     Avatar,
     IconButton,
+    Select,
+    Input
 } from "@material-tailwind/react";
 
 import { Button } from "./link-button";
@@ -35,4 +37,6 @@ export {
     MenuItem,
     Avatar,
     IconButton,
+    Select,
+    Input
 };

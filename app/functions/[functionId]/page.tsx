@@ -6,7 +6,9 @@ import { redirect } from 'next/navigation';
 import { PrivateMenu } from '@/components/private-navbar';
 import Link from "next/link";
 import { Button, Card, CardBody } from "@/components";
-import { WrenchIcon } from "@heroicons/react/24/outline";
+import { WrenchIcon, SparklesIcon } from "@heroicons/react/24/outline";
+import { FunctionCard } from "@/components/function-card";
+// import { InstallButton } from "@/components/function-install-btn";
 
 export const metadata: Metadata = {
     title: "X Function | Gemini Sheets",
@@ -25,18 +27,26 @@ export const metadata: Metadata = {
     const functionData = await prisma.function.findFirst({
       where: {
         id: functionId,
-      }
-    });    
-  
+      },
+      include: {
+        sheetFunctions: {
+          include: {
+            sheet: true
+          }
+        }, 
+      },
+    });   
+      
     return (
       <div className="container mx-auto p-4">
         <PrivateMenu />
         <div className='flex flex-row items-center justify-between'>
           <h1 className="text-2xl font-bold mb-4 mt-8">{functionData?.name}</h1>
           <div className="flex gap-2">
-            <Button color="green" variant="filled">
-              Install to Sheets
+            <Button color="green" icon={<SparklesIcon className='h-4 w-4 mr-2' />} href={`/functions/${functionId}/install`}>
+              Install to Sheet
             </Button>
+            {/* <InstallButton functionId={functionData?.id || ""} /> */}
             <Button color="blue" icon={<WrenchIcon className='h-4 w-4 mr-2' />} href="/functions/add">
               Manage
             </Button>
@@ -52,6 +62,20 @@ export const metadata: Metadata = {
             </p>
           </CardBody>
         </Card>
+        <h2 className="text-large font-bold mt-4">Installed on sheets</h2>
+        {functionData?.sheetFunctions.map((sheetFunction) => (
+          <FunctionCard
+            key={sheetFunction.sheet.id}
+            title={sheetFunction.sheet.name}
+            content={
+              <div>
+                <small>{new Date(sheetFunction.sheet.createdAt).toLocaleDateString()}</small>
+              </div>
+            }
+            buttonText={"View"}
+            buttonLink={`/sheets/${sheetFunction.sheet.id}`}
+            />
+        ))}
       </div>
     );
   }
