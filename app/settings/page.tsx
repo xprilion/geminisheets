@@ -1,7 +1,9 @@
+import prisma from "@/lib/prisma";
 import { Metadata } from 'next';
 import {getServerSession} from "next-auth/next";
 import {authOptions} from "@/lib/auth";
 import { redirect } from 'next/navigation';
+import { PrivateMenu } from '@/components/private-navbar';
 
 export const metadata: Metadata = {
     title: "Settings | Gemini Sheets",
@@ -14,9 +16,20 @@ export const metadata: Metadata = {
     if(!session?.user){
         redirect("/")
     }
+
+    const userData = await prisma.user.findFirst({
+      where: {
+        id: session.userId,
+      }
+    });
   
     return (
-      <div className="flex flex-col items-center justify-center min-h-screen py-2">
+      <div className="container mx-auto p-4">
+        <PrivateMenu />
+        <h1 className="text-2xl font-bold mb-4 mt-8">Settings</h1>
+        {
+          userData?.email
+        }
       </div>
     );
   }

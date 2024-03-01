@@ -4,13 +4,13 @@ import {authOptions} from "@/lib/auth";
 import prisma from "@/lib/prisma";
 import { redirect } from 'next/navigation';
 import { PrivateMenu } from '@/components/private-navbar';
+import { Button } from '@/components';
+import Link from 'next/link';
 
-type Function = {
-    id: number;
-    name: string;
-    description: string;
-    createdAt: Date;
-};
+import {
+  PlusCircleIcon
+} from "@heroicons/react/24/solid";
+
 
 export const metadata: Metadata = {
     title: "Dashboard | Gemini Sheets",
@@ -27,13 +27,13 @@ export const metadata: Metadata = {
 
     const totalFunctions = await prisma.function.count({
       where: {
-        userId: session.userId as string, // Ensure this matches how you're storing the user ID in your session
+        userId: session.userId as string,
       },
     });
   
     const recentFunctions = await prisma.function.findMany({
       where: {
-        userId: session.userId, // Ensure this matches how you're storing the user ID in your session
+        userId: session.userId,
       },
       orderBy: {
         createdAt: 'desc',
@@ -59,6 +59,12 @@ export const metadata: Metadata = {
             </ul>
           </div>
         </div>
+        <Link href="/functions/add">
+          <Button color="white" className='flex flex-row mt-4' variant="outlined" size="md" ripple={true} placeholder={"Add Function"}>
+            <PlusCircleIcon className='h-4 w-4 mr-2' />
+              Add Function
+          </Button>
+        </Link>
       </div>
     );
   }

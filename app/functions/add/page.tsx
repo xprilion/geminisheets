@@ -2,6 +2,8 @@ import { Metadata } from 'next';
 import {getServerSession} from "next-auth/next";
 import {authOptions} from "@/lib/auth";
 import { redirect } from 'next/navigation';
+import { PrivateMenu } from '@/components/private-navbar';
+import { FunctionAddForm } from '@/components/function-add-form';
 
 export const metadata: Metadata = {
     title: "Add Function | Gemini Sheets",
@@ -16,7 +18,10 @@ export const metadata: Metadata = {
     }
   
     return (
-      <div className="flex flex-col items-center justify-center min-h-screen py-2">
+      <div className="container mx-auto p-4">
+        <PrivateMenu />
+        <h1 className="text-2xl font-bold mb-4 mt-8">Add Function</h1>
+        <FunctionAddForm />
       </div>
     );
   }

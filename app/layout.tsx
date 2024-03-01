@@ -17,7 +17,7 @@ export default function RootLayout({
       <ThemeProvider>
         <html lang="en">
           <body className={inter.className}>
-            <div className="mx-auto max-w-screen-xl px-6 py-3">
+            <div className="mx-auto max-w-screen-xl px-2">
               {children}
             </div>
           </body>

@@ -21,19 +21,21 @@ export const authOptions: NextAuthOptions = {
                   access_type: "offline",
                   response_type: "code"
                 }
+            },
+            profile(profile) {
+                return {
+                  id: profile.sub,
+                  name: profile.name,
+                  email: profile.email,
+                  image: profile.picture,
+                }
             }
         }),
     ],
     callbacks: {
-        async signIn({ account, profile }) {
-        console.log("Profile created in nextauth")
-          console.log(account, profile)
-          return true // Do different verification for other providers that don't have `email_verified`
-        },
         async session({ session, token, user }) {
-            console.log("Session set in nextauth")
-            // Implement additional session handling logic here if needed
-            return session;
+            session.userId = token.sub || "";
+            return Promise.resolve(session);
           },
       }
 };
