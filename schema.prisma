@@ -60,8 +60,9 @@ model Function {
   id          String    @id @default(cuid())
   name        String
   description String
-  code        String
+  prompt        String  @default("")
   enabled     Boolean   @default(true)
+  inputs      Json?
   userId      String
   user        User      @relation(fields: [userId], references: [id])
   sheetFunctions      SheetFunction[]

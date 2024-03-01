@@ -16,7 +16,8 @@ export async function POST(req: NextRequest) {
                     name: name || "Untitled Function",
                     description: description || "No description",
                     userId: session?.userId || "",
-                    code: prompt || ""
+                    prompt: prompt || "",
+                    inputs: inputs
                 },
             });
 

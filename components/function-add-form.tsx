@@ -3,7 +3,9 @@
 import { HttpMethod } from '@/types/http';
 import React, { useState } from 'react';
 import { Button } from "@/components";
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
+
+import { XCircleIcon } from '@heroicons/react/24/outline';
 
 interface InputField {
   name: string;
@@ -19,7 +21,7 @@ const inputTypes = [
 export const FunctionAddForm: React.FC = () => {
   const [functionName, setFunctionName] = useState('');
   const [description, setDescription] = useState('');
-  const [inputs, setInputs] = useState<InputField[]>([{ name: '', type: inputTypes[0].value }]);
+  const [inputs, setInputs] = useState<InputField[]>([]);
   const [logic, setLogic] = useState('');
 
   const router = useRouter();
@@ -53,7 +55,7 @@ export const FunctionAddForm: React.FC = () => {
 
     if (response.ok) {
       const data = await response.json();
-      router.push(`/sheets/${data.id}`);
+      router.push(`/functions/${data.id}`);
     } else {
       console.error('Failed to add the function');
     }
@@ -115,9 +117,9 @@ export const FunctionAddForm: React.FC = () => {
             <button
               type="button"
               onClick={() => handleRemoveInput(index)}
-              className="text-red-500 bg-transparent p-1 rounded hover:bg-red-100"
+              className="text-white bg-transparent rounded hover:text-red-500"
             >
-              &#x2715; {/* This is a Unicode multiplication sign (X) used as a delete icon */}
+              <XCircleIcon className='h-8 w-8' />
             </button>
           </div>
         ))}
@@ -141,7 +143,7 @@ export const FunctionAddForm: React.FC = () => {
       </div>
       
       <Button type="submit" color="blue" variant="filled">
-        Submit
+        Save
       </Button>
     </form>
   );

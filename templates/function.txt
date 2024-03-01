@@ -1,0 +1,10 @@
+/**
+ * %DESCRIPTION%
+ %PARAMS%
+ * @return {string} Gemini Response
+ * @customfunction
+ */
+
+function AI_%NAME%(%ARGS%) {
+  return callApi("%PROMPT%")
+}
