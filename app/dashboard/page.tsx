@@ -10,6 +10,7 @@ import Link from 'next/link';
 import {
   PlusCircleIcon
 } from "@heroicons/react/24/solid";
+import { FunctionCard } from '@/components/function-card';
 
 
 export const metadata: Metadata = {
@@ -45,26 +46,34 @@ export const metadata: Metadata = {
     return (
       <div className="container mx-auto p-4">
         <PrivateMenu />
-        <h1 className="text-2xl font-bold mb-4 mt-8">Dashboard</h1>
+        <div className='flex flex-row items-center justify-between'>
+          <h1 className="text-2xl font-bold mb-4 mt-8">Dashboard</h1>
+          <Button color="blue" icon={<PlusCircleIcon className='h-4 w-4 mr-2' />} href="/functions/add">
+            Add Function
+          </Button>
+        </div>
         <div>
           <h2 className="text-xl">Total Functions: {totalFunctions}</h2>
           <div>
             <h3 className="text-lg">Recent Functions:</h3>
-            <ul>
+            <div className='flex gap-4'>
               {recentFunctions.map((func) => (
-                <li key={func.id}>
-                  {func.name} - {new Date(func.createdAt).toLocaleDateString()}
-                </li>
+                <FunctionCard
+                  key={func.id}
+                  title={func.name}
+                  content={
+                    <div>
+                      <p>{func.description}</p>
+                      <small>{new Date(func.createdAt).toLocaleDateString()}</small>
+                    </div>
+                  }
+                  buttonText={"View"}
+                  buttonLink={`/functions/${func.id}`}
+                  />
               ))}
-            </ul>
+            </div>
           </div>
         </div>
-        <Link href="/functions/add">
-          <Button color="white" className='flex flex-row mt-4' variant="outlined" size="md" ripple={true} placeholder={"Add Function"}>
-            <PlusCircleIcon className='h-4 w-4 mr-2' />
-              Add Function
-          </Button>
-        </Link>
       </div>
     );
   }

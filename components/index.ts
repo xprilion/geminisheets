@@ -7,7 +7,6 @@ import {
     Collapse,
     Typography,
     ThemeProvider, 
-    Button,
     Navbar,
     MobileNav,
     Menu,
@@ -17,15 +16,17 @@ import {
     Avatar,
     IconButton,
 } from "@material-tailwind/react";
+
+import { Button } from "./link-button";
  
 export { 
+    Button,
     Card,
     CardBody,
     CardFooter,
     Collapse,
     Typography,
     ThemeProvider, 
-    Button,
     Navbar,
     MobileNav,
     Menu,

@@ -50,7 +50,7 @@ import Link from "next/link";
           color="blue-gray"
           className="p-1 font-medium"
         >
-          <Link href="https://github.com/xprilion/gemini-sheets" target="_blank" className="flex items-center hover:text-blue-500 transition-colors">
+          <Link href="https://github.com/xprilion/geminisheets" target="_blank" className="flex items-center hover:text-blue-500 transition-colors">
             Help
           </Link>
         </Typography>

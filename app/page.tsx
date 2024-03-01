@@ -15,8 +15,6 @@ export const metadata: Metadata = {
 export default async function Home() {
   const session = await getServerSession(authOptions);
 
-  console.log("Session", session)
-
   return (
     <div className="flex flex-col items-center justify-center min-h-screen py-2">
       <Head>
@@ -36,11 +34,9 @@ export default async function Home() {
         { session?.user?.name ? (<>
             <p>Hello, {session?.user?.name}</p>
             <div className="mt-6">
-              <Link href="/dashboard">
-                <Button className='mr-2' color="blue" variant="outlined" size="md" ripple={true} placeholder={"Dashboard"}>
+                <Button href="/dashboard" className='mr-2' color="blue" variant="outlined" size="md" ripple={true}>
                     Dashboard
                 </Button>
-              </Link>
               <LogoutButton />
             </div>
           </>

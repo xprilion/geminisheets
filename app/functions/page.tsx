@@ -7,6 +7,7 @@ import { PrivateMenu } from '@/components/private-navbar';
 import Link from "next/link";
 import { Button } from "@/components";
 import { PlusCircleIcon } from "@heroicons/react/24/solid";
+import { FunctionCard } from "@/components/function-card";
 
 export const metadata: Metadata = {
     title: "Functions | Gemini Sheets",
@@ -32,24 +33,30 @@ export const metadata: Metadata = {
     return (
       <div className="container mx-auto p-4">
         <PrivateMenu />
-        <h1 className="text-2xl font-bold mb-4 mt-8">Functions</h1>
-        <div>
-          <div>
-            <ul>
-              {allFunctions.map((func) => (
-                <li key={func.id}>
-                  <Link href={`/functions/${func.id}`}>{func.name}</Link> - {new Date(func.createdAt).toLocaleDateString()}
-                </li>
-              ))}
-            </ul>
-          </div>
-        </div>
-        <Link href="/functions/add">
-          <Button color="white" className='flex flex-row mt-4' variant="outlined" size="md" ripple={true} placeholder={"Add Function"}>
-            <PlusCircleIcon className='h-4 w-4 mr-2' />
-              Add Function
+        <div className='flex flex-row items-center justify-between'>
+          <h1 className="text-2xl font-bold mb-4 mt-8">Functions</h1>
+          <Button color="blue" icon={<PlusCircleIcon className='h-4 w-4 mr-2' />} href="/functions/add">
+            Add Function
           </Button>
-        </Link>
+        </div>
+        <div>
+          <div className='flex gap-4'>
+              {allFunctions.map((func) => (
+                <FunctionCard
+                  key={func.id}
+                  title={func.name}
+                  content={
+                    <div>
+                      <p>{func.description}</p>
+                      <small>{new Date(func.createdAt).toLocaleDateString()}</small>
+                    </div>
+                  }
+                  buttonText={"View"}
+                  buttonLink={`/functions/${func.id}`}
+                  />
+              ))}
+            </div>
+        </div>
       </div>
     );
   }

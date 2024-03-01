@@ -2,6 +2,8 @@
 
 import { HttpMethod } from '@/types/http';
 import React, { useState } from 'react';
+import { Button } from "@/components";
+import { redirect } from 'next/navigation';
 
 interface InputField {
   name: string;
@@ -49,7 +51,7 @@ export const FunctionAddForm: React.FC = () => {
     });
 
     const data = await response.json();
-    console.log(data);
+    redirect(`/functions/${data.id}`)
   };
 
   return (
@@ -133,9 +135,9 @@ export const FunctionAddForm: React.FC = () => {
         />
       </div>
       
-      <button type="submit" className="bg-blue-500 text-white p-2 rounded">
+      <Button type="submit" color="blue" variant="filled">
         Submit
-      </button>
+      </Button>
     </form>
   );
 };

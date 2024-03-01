@@ -5,7 +5,8 @@ import {authOptions} from "@/lib/auth";
 import { redirect } from 'next/navigation';
 import { PrivateMenu } from '@/components/private-navbar';
 import Link from "next/link";
-import { Button } from "@/components";
+import { Button, Card, CardBody } from "@/components";
+import { WrenchIcon } from "@heroicons/react/24/outline";
 
 export const metadata: Metadata = {
     title: "X Function | Gemini Sheets",
@@ -30,13 +31,27 @@ export const metadata: Metadata = {
     return (
       <div className="container mx-auto p-4">
         <PrivateMenu />
-        <h1 className="text-2xl font-bold mb-4 mt-8">View Function</h1>
-        {functionData?.name}
-        <Link href="/functions/add">
-          <Button color="white" className='flex flex-row mt-4' variant="outlined" size="md" ripple={true} placeholder={"Add Function"}>
-            Install to Sheets
-          </Button>
-        </Link>
+        <div className='flex flex-row items-center justify-between'>
+          <h1 className="text-2xl font-bold mb-4 mt-8">{functionData?.name}</h1>
+          <div className="flex gap-2">
+            <Button color="green" variant="filled">
+              Install to Sheets
+            </Button>
+            <Button color="blue" icon={<WrenchIcon className='h-4 w-4 mr-2' />} href="/functions/add">
+              Manage
+            </Button>
+          </div>
+
+        </div>
+        <p>{functionData?.description}</p>
+        <Card placeholder={"function code card"} className="mt-4">
+          <CardBody placeholder={"whut"}>
+            <p className="font-bold">Function prompt: </p>
+            <p>
+              {functionData?.code}
+            </p>
+          </CardBody>
+        </Card>
       </div>
     );
   }
