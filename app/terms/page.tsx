@@ -1,3 +1,4 @@
+import { PublicMenu } from '@/components/public-navbar';
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
@@ -8,8 +9,9 @@ export const metadata: Metadata = {
   export default async function Home() {
 
     return (
-        <main className="min-h-screen bg-gray-100 text-gray-800 p-8">
-            <div className="max-w-4xl mx-auto">
+        <main className="min-h-screen mx-auto p-4">
+            <PublicMenu />
+            <div className="max-w-4xl mt-8 mx-auto">
                 <h1 className="text-3xl font-bold mb-4">Terms of Service</h1>
                 <p className="mb-2">
                     Last Updated: 1 March, 2024

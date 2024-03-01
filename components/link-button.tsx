@@ -15,9 +15,10 @@ interface LinkButtonProps extends ButtonProps {
     ripple?: boolean;
     children: children;
     className?: className;
+    target?: "_blank" | "_self" | "_parent" | "_top";
 }
 
-export function Button({ type, href, variant, size, color, onClick, icon, ripple, children, className }: LinkButtonProps) {
+export function Button({ type, href, variant, size, color, onClick, icon, ripple, children, className, target }: LinkButtonProps) {
     const buttonEl = (<>
         <BaseButton type={type || "button"} onClick={onClick} className={`${icon ? "px-3" : ""} ${className}`} color={color || "white"} variant={variant || "outlined"} size={size || "md"} ripple={ ripple||true } placeholder={"Button"}>
             <div className="flex items-center">
@@ -29,7 +30,7 @@ export function Button({ type, href, variant, size, color, onClick, icon, ripple
 
     if(href){
         return (
-            <Link href={href}>
+            <Link href={href} target={target || "_self"}>
                 {buttonEl}
             </Link>
           );

@@ -4,10 +4,9 @@ import {getServerSession} from "next-auth/next";
 import {authOptions} from "@/lib/auth";
 import { redirect } from 'next/navigation';
 import { PrivateMenu } from '@/components/private-navbar';
-import Link from "next/link";
 import { Button } from "@/components";
 import { PlusCircleIcon } from "@heroicons/react/24/solid";
-import { FunctionCard } from "@/components/function-card";
+import { SheetCard } from "@/components/sheet-card";
 
 export const metadata: Metadata = {
     title: "Sheets | Gemini Sheets",
@@ -42,17 +41,16 @@ export const metadata: Metadata = {
         <div>
           <div className='flex gap-4'>
               {allSheets.map((sheet) => (
-                <FunctionCard
+                <SheetCard
                   key={sheet.id}
                   title={sheet.name}
                   content={
                     <div>
-                      <p>{sheet.googleSheetId}</p>
                       <small>{new Date(sheet.createdAt).toLocaleDateString()}</small>
                     </div>
                   }
-                  buttonText={"View"}
-                  buttonLink={`/sheets/${sheet.id}`}
+                  viewLink={`/sheets/${sheet.id}`}
+                  viewExternalLink={`https://docs.google.com/spreadsheets/d/${sheet.googleSheetId}`}
                   />
               ))}
             </div>

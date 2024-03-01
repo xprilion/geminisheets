@@ -51,8 +51,7 @@ export const metadata: Metadata = {
                       <small>{new Date(func.createdAt).toLocaleDateString()}</small>
                     </div>
                   }
-                  buttonText={"View"}
-                  buttonLink={`/functions/${func.id}`}
+                  viewLink={`/functions/${func.id}`}
                   />
               ))}
             </div>

@@ -27,6 +27,7 @@ export const metadata: Metadata = {
     const functionData = await prisma.function.findFirst({
       where: {
         id: functionId,
+        userId: session?.userId
       },
       include: {
         sheetFunctions: {
@@ -58,11 +59,11 @@ export const metadata: Metadata = {
           <CardBody placeholder={"whut"}>
             <p className="font-bold">Function prompt: </p>
             <p>
-              {functionData?.code}
+              {functionData?.prompt}
             </p>
           </CardBody>
         </Card>
-        <h2 className="text-large font-bold mt-4">Installed on sheets</h2>
+        <h2 className="text-large font-bold mt-4">Installed on Sheets</h2>
         {functionData?.sheetFunctions.map((sheetFunction) => (
           <FunctionCard
             key={sheetFunction.sheet.id}
@@ -72,8 +73,8 @@ export const metadata: Metadata = {
                 <small>{new Date(sheetFunction.sheet.createdAt).toLocaleDateString()}</small>
               </div>
             }
-            buttonText={"View"}
-            buttonLink={`/sheets/${sheetFunction.sheet.id}`}
+            viewLink={`/sheets/${sheetFunction.sheet.id}`}
+            projectLink={`https://script.google.com/home/projects/${sheetFunction.appsScriptProjectId}`}
             />
         ))}
       </div>

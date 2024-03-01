@@ -6,6 +6,7 @@ import { redirect } from 'next/navigation';
 import { PrivateMenu } from '@/components/private-navbar';
 import { Card, CardBody, Input } from "@/components";
 import { GeminiKeyForm } from "@/components/account-gemini-key-form";
+import { LogoutButton } from "@/components/logout-button";
 
 export const metadata: Metadata = {
     title: "Settings | Gemini Sheets",
@@ -28,7 +29,11 @@ export const metadata: Metadata = {
     return (
       <div className="container mx-auto p-4">
         <PrivateMenu />
-        <h1 className="text-2xl font-bold mb-4 mt-8">Settings</h1>
+        <div className='flex flex-row items-center justify-between'>
+          <h1 className="text-2xl font-bold mb-4 mt-8">Settings</h1>          
+          <LogoutButton />
+        </div>
+        
         <Card placeholder={"placeholder"}>
           <CardBody placeholder={"placeholder"} className="flex flex-col gap-4">
             <h2 className="text-xl font-bold">User Settings</h2>

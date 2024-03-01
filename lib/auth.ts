@@ -30,5 +30,5 @@ export const authOptions: NextAuthOptions = {
             session.userId = token.sub || "";
             return Promise.resolve(session);
           },
-      }
+    },
 };

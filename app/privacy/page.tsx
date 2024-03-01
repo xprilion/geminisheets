@@ -2,6 +2,7 @@ import { Metadata } from 'next';
 import {getServerSession} from "next-auth/next";
 import {authOptions} from "@/lib/auth";
 import { redirect } from 'next/navigation';
+import { PublicMenu } from '@/components/public-navbar';
 
 export const metadata: Metadata = {
     title: "Privacy Policy | Gemini Sheets",
@@ -16,8 +17,9 @@ export const metadata: Metadata = {
     }
   
     return (
-        <main className="min-h-screen bg-gray-100 text-gray-800 p-8">
-        <div className="max-w-4xl mx-auto">
+        <main className="min-h-screen mx-auto p-4">
+            <PublicMenu />
+            <div className="max-w-4xl mt-8 mx-auto">
             <h1 className="text-3xl font-bold mb-4">Privacy Policy for Gemini Sheets</h1>
             <p className="mb-4">
                 The privacy and security of our users&apos; data is our top priority. This Privacy Policy outlines our practices concerning the handling of your data by the &apos;Gemini Sheets Add-on&apos;.

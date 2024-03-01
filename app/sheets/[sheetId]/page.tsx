@@ -6,6 +6,7 @@ import { redirect } from 'next/navigation';
 import { PrivateMenu } from '@/components/private-navbar';
 import { Button, Card, CardBody } from "@/components";
 import { WrenchIcon, SparklesIcon } from "@heroicons/react/24/outline";
+import { FunctionCard } from "@/components/function-card";
 
 export const metadata: Metadata = {
     title: "X Function | Gemini Sheets",
@@ -25,7 +26,14 @@ export const metadata: Metadata = {
       where: {
         id: sheetId,
         userId: session?.userId
-      }
+      },
+      include: {
+        sheetFunctions: {
+          include: {
+            function: true
+          }
+        }, 
+      },
     });    
   
     return (
@@ -38,9 +46,20 @@ export const metadata: Metadata = {
               Manage
             </Button>
           </div>
-
         </div>
-        <p>{sheetData?.googleSheetId}</p>
+        <h2 className="text-large font-bold mt-4">Installed Functions</h2>
+        {sheetData?.sheetFunctions.map((sheetFunction) => (
+          <FunctionCard
+            key={sheetFunction.function.id}
+            title={sheetFunction.function.name}
+            content={
+              <div>
+                <small>{new Date(sheetFunction.function.createdAt).toLocaleDateString()}</small>
+              </div>
+            }
+            viewLink={`/functions/${sheetFunction.function.id}`}
+            />
+        ))}
       </div>
     );
   }

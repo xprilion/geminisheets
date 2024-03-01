@@ -9,7 +9,7 @@ import {signOut} from "next-auth/react";
 export function LogoutButton() {
 
     return (
-        <Button color="white" variant="outlined" size="md" ripple={true} placeholder={"Logout"}  onClick={() => signOut()}>
+        <Button size="md" color="red" variant="gradient" onClick={() => signOut()}>
             Logout
         </Button>
     )

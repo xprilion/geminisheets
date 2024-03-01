@@ -2,14 +2,14 @@
 
 import { Card, CardBody, CardFooter, Button, Typography } from "@/components";
 
-interface FunctionCardProps {
+interface SheetCardProps {
   title: string;
   content: any;
   viewLink: string;
-  projectLink?: string;
+  viewExternalLink: string;
 }
 
-export function FunctionCard({ title, content, viewLink, projectLink }: FunctionCardProps) {
+export function SheetCard({ title, content, viewLink, viewExternalLink }: SheetCardProps) {
   return (
     <Card placeholder={"placeholder"} className="mt-6 w-96">
       <CardBody placeholder={"placeholder"}>
@@ -20,7 +20,7 @@ export function FunctionCard({ title, content, viewLink, projectLink }: Function
       </CardBody>
       <CardFooter placeholder={"placeholder"} className="pt-0">
           <Button color="black" variant="filled" href={viewLink}>View</Button>
-          {projectLink && <Button target="_blank" color="green" className="ml-2" variant="outlined" href={projectLink}>View Apps Script Project</Button> }
+          <Button target="_blank" color="green" variant="outlined" className="ml-2" href={viewExternalLink}>View on Google Sheets</Button>
       </CardFooter>
     </Card>
   );
